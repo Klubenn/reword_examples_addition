@@ -1,12 +1,16 @@
+import time
 from google import genai
 import os
 import re
 import pandas as pd
 
+
+filename = 'filtered.csv'
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
+
 def convert_text_to_reword_format(text):
-    text = text.split('\n***\n')
+    text = [t.strip('\n') for t in text.split('\n***\n')]
     print(text)
     if len(text) == 4:
         line = '[{{"o":"{text0}","t":"{text1}"}},{{"o":"{text2}","t":"{text3}"}}]'
@@ -25,15 +29,22 @@ def clean_word(word):
     return re.sub(pattern, '', word).strip()
 
 
-# Чтение данных из файла filtered.csv
-df = pd.read_csv('filtered.csv')
-
-# Создание новой колонки EXAMPLES_RUS
-df['EXAMPLES_RUS'] = df.apply(lambda row: make_request(clean_word(row['WORD']), row['RUS']), axis=1)
-
-# Сохранение обновленного DataFrame в новый CSV файл
-df.to_csv('filtered_with_examples.csv', index=False)
-
-df = pd.read_csv('filtered_with_examples.csv')
-df['EXAMPLES_RUS'] = df['EXAMPLES_RUS'].apply(convert_text_to_reword_format)
-df.to_csv('filtered_with_examples_fixed.csv', index=False)
+while True:
+    df = pd.read_csv(filename)
+    for index, row in df.iterrows():
+        try:
+            if pd.isna(row['EXAMPLES_RUS']):
+                cleaned_word = clean_word(row['WORD'])
+                example = make_request(cleaned_word, row['RUS'])
+                df.at[index, 'EXAMPLES_RUS'] = example
+                time.sleep(1)
+        except Exception as e:
+            print(f"Error processing row {index}: {e}")
+            # Сохранение промежуточных результатов
+            df.to_csv(filename, index=False)
+            time.sleep(10)
+            break
+    else:
+        # Сохранение окончательного DataFrame в новый CSV файл
+        df.to_csv(filename, index=False)
+        break

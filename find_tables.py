@@ -28,20 +28,16 @@ else:
     print("В базе данных нет таблиц или она пуста.")
 
 table_name = 'WORD'
-
-# # Запрос нескольких строк
-# query = f"SELECT * FROM {table_name} WHERE EXAMPLES_RUS IS NOT NULL LIMIT 10;"  # Можно изменить количество строк
-# df = pd.read_sql(query, conn)
-
-# print(df)
+# Запрос нескольких строк
+query = f"SELECT * FROM {table_name} WHERE EXAMPLES_RUS IS NOT NULL LIMIT 10;"
+df = pd.read_sql(query, conn)
+print(df)
 
 
-
-# table_name = 'WORD_CATEGORY'
-# query = f'SELECT DISTINCT CATEGORY_ID FROM {table_name};'
-# df = pd.read_sql(query, conn)
-
-# print(df)
+table_name = 'WORD_CATEGORY'
+query = f'SELECT DISTINCT CATEGORY_ID FROM {table_name};'
+df = pd.read_sql(query, conn)
+print(df)
 
 # Закрытие соединения
 conn.close()

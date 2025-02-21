@@ -2,15 +2,16 @@ import sqlite3
 import pandas as pd
 
 # Подключение к базе данных
-db_path = "reword_de.backup"  # Укажите путь к вашему файлу SQLite
+db_path = "reword_de.backup"
 conn = sqlite3.connect(db_path)
 
 # SQL-запрос для выборки нужных данных
-query = """
-SELECT w.ID, w.WORD, w.RUS, w.EXAMPLES_RUS, w.Q_REC, w.Q_REP
+category_id = 'top4000'
+query = f"""
+SELECT w.ID, w.WORD, w.RUS, w.Q_REC, w.Q_REP
 FROM WORD w
 JOIN WORD_CATEGORY wc ON w.ID = wc.WORD_ID
-WHERE wc.CATEGORY_ID = 'top4000'
+WHERE wc.CATEGORY_ID = '{category_id}'
 AND w.EXAMPLES_RUS IS NULL
 AND (w.Q_REC <> w.Q_REP OR w.Q_REC IN (0, 2));
 """
