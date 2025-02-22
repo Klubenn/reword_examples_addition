@@ -1,5 +1,10 @@
 import sqlite3
 import pandas as pd
+import yaml
+
+# Load configuration from YAML file
+with open('config.yaml', 'r') as file:
+    config = yaml.safe_load(file)
 
 # Disable row limit
 pd.set_option('display.max_rows', None)
@@ -11,22 +16,13 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.max_colwidth', None)
 
 # Connect to the database
-db_path = "reword_de.backup"  # Specify the path to your database file
+db_path = config['db_name']
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
 # Query the list of tables
 cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
 tables = cursor.fetchall()
-
-# Print the list of tables
-if tables:
-    print("List of tables in the database:")
-    for table in tables:
-        print(table[0])
-else:
-    print("There are no tables in the database or it is empty.")
-
 
 # Find and print categories
 print("\nList of categories:")

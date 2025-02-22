@@ -12,4 +12,4 @@ This small project is designed to extract all words of a specified category that
 4. Run `4_update_db.py` to update the values in the database.
 
 ## Additional Notes
-Note that the name of the category, database, and other variable parameters should be reviewed and changed if needed in the code. The script is not interactive and is practically a one-time use tool, so I don't feel like investing much time in it as soon as it has fulfilled all my needs. However, if you have questions or suggestions, feel free to create a new issue.
+Specify the needed parameters in the `config.yaml` file. Note that some other values like column name for translation or maybe something else should be changed directly in the code depending on the languages you select. Existing settings are proved to work with Russian-German Reword app and haven't been tested with others. The script is not interactive and is practically a one-time use tool, so I don't feel like investing much time in it as soon as it has fulfilled all my needs. However, if you have questions or suggestions, feel free to create a new issue.

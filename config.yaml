@@ -1,0 +1,4 @@
+target_language: 'German'
+native_language: 'Russian'
+category: 'top4000'
+db_name: 'reword_de.backup'

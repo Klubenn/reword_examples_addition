@@ -1,12 +1,17 @@
 import sqlite3
 import pandas as pd
+import yaml
+
+# Load configuration from YAML file
+with open('config.yaml', 'r') as file:
+    config = yaml.safe_load(file)
 
 # Connect to the database
-db_path = "reword_de.backup"
+db_path = config['db_name']
 conn = sqlite3.connect(db_path)
 
 # SQL query to select the required data
-category_id = input("Enter category name: ")
+category_id = config['category']
 query = f"""
 SELECT w.ID, w.WORD, w.RUS, w.Q_REC, w.Q_REP
 FROM WORD w

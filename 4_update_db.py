@@ -1,12 +1,17 @@
 import sqlite3
 import pandas as pd
+import yaml
+
+# Load configuration from YAML file
+with open('config.yaml', 'r') as file:
+    config = yaml.safe_load(file)
 
 # Reading data from CSV file
 csv_filename = 'filtered.csv'
 df = pd.read_csv(csv_filename)
 
 # Connecting to the database
-db_path = "reword_de.backup"  # Specify the path to your SQLite file
+db_path = config['db_name']
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
