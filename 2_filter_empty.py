@@ -11,13 +11,12 @@ db_path = config['db_name']
 conn = sqlite3.connect(db_path)
 
 # SQL query to select the required data
-category_id = config['category']
 query = f"""
-SELECT w.ID, w.WORD, w.RUS, w.Q_REC, w.Q_REP
+SELECT w.ID, w.WORD, w.{config['translation_column']}, {config['examples_column']}
 FROM WORD w
 JOIN WORD_CATEGORY wc ON w.ID = wc.WORD_ID
-WHERE wc.CATEGORY_ID = '{category_id}'
-AND w.EXAMPLES_RUS IS NULL
+WHERE wc.CATEGORY_ID = '{config['category']}'
+AND w.{config['examples_column']} IS NULL
 AND (w.Q_REC <> w.Q_REP OR w.Q_REC IN (0, 2));
 """
 

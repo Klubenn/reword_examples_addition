@@ -14,8 +14,7 @@ client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 
 def convert_text_to_reword_format(text):
-    text = [t.strip('\n') for t in text.split('\n***\n')]
-    print(text)
+    text = [t.strip(' \n') for t in text.split('***')]
     if len(text) == 4:
         line = '[{{"o":"{text0}","t":"{text1}"}},{{"o":"{text2}","t":"{text3}"}}]'
         return line.format(text0=text[0], text1=text[1], text2=text[2], text3=text[3])
@@ -40,17 +39,17 @@ while True:
     indices = []
     for index, row in df.iterrows():
         try:
-            if pd.isna(row['EXAMPLES_RUS']):
+            if pd.isna(row[config['examples_column']]):
+                print(f"Processing row {index}")
                 cleaned_word = clean_word(row['WORD'])
-                word_translation_pairs.append((cleaned_word, row['RUS']))
+                word_translation_pairs.append((cleaned_word, row[config['translation_column']]))
                 indices.append(index)
                 if len(word_translation_pairs) == 10:
                     examples = make_request(word_translation_pairs)
                     for i, example in zip(indices, examples):
-                        df.at[i, 'EXAMPLES_RUS'] = example
+                        df.at[i, config['examples_column']] = str(example)
                     word_translation_pairs = []
                     indices = []
-                    time.sleep(1)
         except Exception as e:
             print(f"Error processing row {index}: {e}")
             # Save intermediate results
@@ -62,7 +61,7 @@ while True:
         if word_translation_pairs:
             examples = make_request(word_translation_pairs)
             for i, example in zip(indices, examples):
-                df.at[i, 'EXAMPLES_RUS'] = example
+                df.at[i, config['examples_column']] = str(example)
         # Save the final DataFrame to a new CSV file
         df.to_csv(filename, index=False)
         break

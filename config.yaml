@@ -1,4 +1,6 @@
 target_language: 'German'
 native_language: 'Russian'
-category: 'top4000'
+examples_column: 'EXAMPLES_RUS'
+translation_column: 'RUS'
+category: 'sports_gymnastics'
 db_name: 'reword_de.backup'

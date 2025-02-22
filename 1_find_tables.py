@@ -24,6 +24,15 @@ cursor = conn.cursor()
 cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
 tables = cursor.fetchall()
 
+# List all column names in the table WORD
+print("List of column names:")
+table_name = 'WORD'
+cursor.execute(f'PRAGMA table_info({table_name});')
+columns = cursor.fetchall()
+print(f"\nList of columns in the table {table_name}:")
+for column in columns:
+    print(column[1])
+
 # Find and print categories
 print("\nList of categories:")
 table_name = 'WORD_CATEGORY'
