@@ -1,12 +1,12 @@
 import sqlite3
 import pandas as pd
 
-# Подключение к базе данных
+# Connect to the database
 db_path = "reword_de.backup"
 conn = sqlite3.connect(db_path)
 
-# SQL-запрос для выборки нужных данных
-category_id = 'top4000'
+# SQL query to select the required data
+category_id = input("Enter category name: ")
 query = f"""
 SELECT w.ID, w.WORD, w.RUS, w.Q_REC, w.Q_REP
 FROM WORD w
@@ -16,15 +16,15 @@ AND w.EXAMPLES_RUS IS NULL
 AND (w.Q_REC <> w.Q_REP OR w.Q_REC IN (0, 2));
 """
 
-# Выполнение запроса и загрузка данных в DataFrame
+# Execute the query and load the data into a DataFrame
 df = pd.read_sql(query, conn)
 
-# Закрытие соединения
+# Close the connection
 conn.close()
 
-# Сохранение в CSV-файл
+# Save to a CSV file
 csv_filename = "filtered.csv"
 df.to_csv(csv_filename, index=False)
 
-print(f"Файл {csv_filename} успешно создан!")
-print(f"Количество слов: {len(df)}")
+print(f"File {csv_filename} created successfully!")
+print(f"Number of words: {len(df)}")

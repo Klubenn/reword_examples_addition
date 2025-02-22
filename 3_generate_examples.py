@@ -40,11 +40,11 @@ while True:
                 time.sleep(1)
         except Exception as e:
             print(f"Error processing row {index}: {e}")
-            # Сохранение промежуточных результатов
+            # Save intermediate results
             df.to_csv(filename, index=False)
             time.sleep(10)
             break
     else:
-        # Сохранение окончательного DataFrame в новый CSV файл
+        # Save the final DataFrame to a new CSV file
         df.to_csv(filename, index=False)
         break
