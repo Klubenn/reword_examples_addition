@@ -1,11 +1,15 @@
 # RE-WORD Examples Enricher
 
-This project extracts all words of a specified category that are not yet learned and do not have an example for the Russian-German version of the Reword app. The extracted table is then updated with examples using AI. After that, the examples are entered into the database, and the file can be used by the app as a source.
+This project extracts all words of a specified category that are not yet learned and do not have an example for the Russian-German version of the Reword app (Other languages can be configured manually). The extracted table is then updated with examples using AI. After that, the examples are entered into the database, and the file can be used by the app as a source.
 
 ## Prerequisites
 
 1. To generate examples using AI, obtain the Gemini API key and follow the instructions [here](https://ai.google.dev/gemini-api/docs/api-key#linuxmacos---bash). The use of the API is free, although it is subject to limitations such as the number of requests per minute and per day (15 / 1500).
-2. Create a Reword backup file in the Menu section of the app and download it to the current folder. Provide the name of the file for the variable `db_name` in `config.yaml` file. After running all stages, upload it back and use it as a source to restore the data in your app.
+2. Create a Reword backup file in the Menu section of the app and download it to the current folder.  
+<img src="first_step.jpg" alt="First Step" width="250"/>
+3. Provide the name of the file for the variable `db_name` in `config.yaml` file.
+4. After running all stages, upload it back and use it as a source to restore the data in your app.  
+<img src="last_step.jpg" alt="Last Step" width="250"/>
 
 ## Usage
 
