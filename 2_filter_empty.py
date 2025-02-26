@@ -16,8 +16,7 @@ SELECT w.ID, w.WORD, w.{config['translation_column']}, {config['examples_column'
 FROM WORD w
 JOIN WORD_CATEGORY wc ON w.ID = wc.WORD_ID
 WHERE wc.CATEGORY_ID = '{config['category']}'
-AND w.{config['examples_column']} IS NULL
-AND (w.Q_REC <> w.Q_REP OR w.Q_REC IN (0, 2));
+AND w.{config['examples_column']} IS NULL;
 """
 
 # Execute the query and load the data into a DataFrame

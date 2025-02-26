@@ -6,26 +6,13 @@ import yaml
 with open('config.yaml', 'r') as file:
     config = yaml.safe_load(file)
 
-# Disable row limit
-pd.set_option('display.max_rows', None)
-
-# Disable column limit
-pd.set_option('display.max_columns', None)
-
-# Disable output width limit (to display long strings fully)
-pd.set_option('display.max_colwidth', None)
-
 # Connect to the database
 db_path = config['db_name']
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
-# Query the list of tables
-cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-tables = cursor.fetchall()
-
 # List all column names in the table WORD
-print("List of column names:")
+print("List of column names for words:")
 table_name = 'WORD'
 cursor.execute(f'PRAGMA table_info({table_name});')
 columns = cursor.fetchall()

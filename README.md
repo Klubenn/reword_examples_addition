@@ -1,14 +1,18 @@
 # RE-WORD Examples Enricher
 
-This project extracts all words of a specified category that are not yet learned and do not have an example for the Russian-German version of the Reword app (Other languages can be configured manually). The extracted table is then updated with examples using AI. After that, the examples are entered into the database, and the file can be used by the app as a source.
+This project extracts all words of a specified category that do not have an example for the Russian-German version of the Reword app (Other languages can be configured manually). The extracted table is then updated with examples using AI. After that, the examples are entered into the database, and the file can be used by the app as a source.
 
 ## Prerequisites
 
-1. To generate examples using AI, obtain the Gemini API key and follow the instructions [here](https://ai.google.dev/gemini-api/docs/api-key#linuxmacos---bash). The use of the API is free, although it is subject to limitations such as the number of requests per minute and per day (15 / 1500).
-2. Create a Reword backup file in the Menu section of the app and download it to the current folder.  
+1. Install the required dependencies by running:
+    ```bash
+    pip install -r requirements.txt
+    ```
+2. To generate examples using AI, obtain the Gemini API key and follow the instructions [here](https://ai.google.dev/gemini-api/docs/api-key#linuxmacos---bash). The use of the API is free, although it is subject to limitations such as the number of requests per minute and per day (15 / 1500).
+3. Create a Reword backup file in the Menu section of the app and download it to the current folder.  
     <img src="first_step.jpg" alt="First Step" width="250"/>
-3. Provide the name of the file for the variable `db_name` in `config.yaml` file.
-4. After running all stages, upload it back and use it as a source to restore the data in your app.  
+4. Provide the name of the backup file for the variable `db_name` in `config.yaml`.
+5. After running all stages, upload it back and use it as a source to restore the data in your app.  
     <img src="last_step.jpg" alt="Last Step" width="250"/>
 
 ## Usage
@@ -21,5 +25,5 @@ This project extracts all words of a specified category that are not yet learned
 ## Additional Notes
 
 Specify the needed parameters in the `config.yaml` file. Note that some other values might have to be changed directly in the code depending on the languages used in your app. Existing settings are proven to work with the Russian-German Reword app and haven't been tested with other languages.  
-The response from AI can sometimes give inconsistent results, which might break the functionality, so it is recommended to perform an initial test on a small set, e.g., 25 items, to see if it works.  
+The response from AI can sometimes give inconsistent results, which might break the functionality, so it is recommended to perform an initial test on a small set, e.g., 30 items, to see if it works.  
 The script is practically a one-time use tool, so I didn't invest much time in it once it fulfilled my needs. However, if you have questions or suggestions, feel free to create a new issue.
